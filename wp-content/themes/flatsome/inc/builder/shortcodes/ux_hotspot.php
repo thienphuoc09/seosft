@@ -30,7 +30,7 @@ add_ux_builder_shortcode( 'ux_hotspot', array(
         ),
         'prod_id' => array(
           'type' => 'select',
-          'heading' => __('PRoduct'),
+          'heading' => __('Product'),
           'full-width' => true,
           'conditions' => 'type === "product"',
           'config' => array(

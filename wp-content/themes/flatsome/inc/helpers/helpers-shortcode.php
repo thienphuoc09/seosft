@@ -36,6 +36,7 @@ function get_flatsome_repeater_start( $atts ) {
       'slider_bullets' => 'false',
       'slider_nav_color' => '',
       'auto_slide' => 'false',
+	  'infinitive' => 'true',
       'format' => '',
     ) );
 
@@ -79,7 +80,7 @@ function get_flatsome_repeater_start( $atts ) {
     if(!empty($atts['columns']) && $atts['type'] !== 'grid'){
       if($atts['columns'])  $row_classes[] = 'large-columns-'.$atts['columns'];
 
-      if(empty($atts['columns__md']) && $atts['columns'] > 4) {$row_classes[] = 'medium-columns-3';}
+      if(empty($atts['columns__md']) && $atts['columns'] > 3) {$row_classes[] = 'medium-columns-3';}
       else{$row_classes[] = 'medium-columns-'.$atts['columns__md'];}
 
       if(empty($atts['columns__sm']) && $atts['columns'] > 2) {$row_classes[] = 'small-columns-2';}
@@ -130,7 +131,7 @@ function get_flatsome_repeater_start( $atts ) {
       // Add slider push class to normal text boxes
       if(!$atts['style'] || $atts['style'] == 'default' || $atts['style'] == 'normal' || $atts['style'] == 'bounce') $row_classes[] = 'slider-nav-push';
 
-      $slider_options = '{"imagesLoaded": true, "groupCells": '.$group_cells.', "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": '.$atts['slider_bullets'].', "rightToLeft": '.$rtl.', "autoPlay" : '.$atts['auto_slide'].'}';
+      $slider_options = '{"imagesLoaded": true, "groupCells": '.$group_cells.', "dragThreshold" : 5, "cellAlign": "left","wrapAround": '.$atts['infinitive'].',"prevNextButtons": true,"percentPosition": true,"pageDots": '.$atts['slider_bullets'].', "rightToLeft": '.$rtl.', "autoPlay" : '.$atts['auto_slide'].'}';
 
     } else if($atts['type'] == 'slider-full'){
       $row_classes_full[] = 'slider slider-auto-height row-collapse';
@@ -139,7 +140,7 @@ function get_flatsome_repeater_start( $atts ) {
 
       if($atts['slider_style']) $row_classes_full[] = 'slider-nav-'.$atts['slider_style'];
 
-      $slider_options = '{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": '.$atts['slider_bullets'].', "rightToLeft": '.$rtl.', "autoPlay" : '.$atts['auto_slide'].'}';
+      $slider_options = '{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": '.$atts['infinitive'].',"prevNextButtons": true,"percentPosition": true,"pageDots": '.$atts['slider_bullets'].', "rightToLeft": '.$rtl.', "autoPlay" : '.$atts['auto_slide'].'}';
     }
 
 	$row_classes_full = array_unique( $row_classes_full );
@@ -154,7 +155,7 @@ function get_flatsome_repeater_start( $atts ) {
     <div class="large-12 col">
       <h3 class="section-title"><span><?php echo $atts['title']; ?></span></h3>
     </div>
-  </div><!-- end .title -->
+  </div>
   <?php } ?>
 
   <?php if($atts['type'] == 'slider') { // Slider grid ?>
@@ -183,34 +184,34 @@ function get_flatsome_repeater_end($type){
 
 /* Fix Normal Shortcodes */
 function flatsome_contentfix($content){
+    if ( ! is_string( $content ) ) {
+      return $content;
+    }
+
     $fix = array (
             '<p>_____</p>' => '<div class="is-divider large"></div>',
             '<p>____</p>' => '<div class="is-divider medium"></div>',
             '<p>___</p>' => '<div class="is-divider small"></div>',
             '</div></p>' => '</div>',
             '<p><div' => '<div',
-            ']</p>' => ']',
             ']<br />' => ']',
-            '<p>[' => '[',
             '<br />[' => '[',
+            '<p>[' => '[',
+            ']</p>' => ']',
 
             // For Gutenberg blocks that is encoded by UX Builder.
             '&lt;!&#8211;' => '<!--',
             '&#8211;&gt;' => '-->',
     );
-    //$content = wpautop( preg_replace( '/<\/?p\>/', "\n", $content ) . "\n" );
-    $content = strtr($content, $fix);
-    return do_shortcode($content);
+
+    return strtr( $content, $fix );
 }
 
-/* Add shortcode fix to content */
-add_filter('the_content', 'flatsome_contentfix');
-
-/* Add shortcode to widgets */
-add_filter('widget_text', 'flatsome_contentfix');
-
-/* Add shortcode to excerpt */
-add_filter('the_excerpt', 'flatsome_contentfix');
+add_filter( 'the_content', 'flatsome_contentfix' );
+add_filter( 'widget_text', 'flatsome_contentfix' );
+add_filter( 'widget_text', 'do_shortcode' );
+add_filter( 'the_excerpt', 'flatsome_contentfix' );
+add_filter( 'the_excerpt', 'do_shortcode' );
 
 /**
  * Remove whitespace characters \r\n\t\f\v from HTML between > and <
@@ -249,7 +250,7 @@ function flatsome_get_image_url($id, $size = 'large'){
         return $id;
     } else {
         $image = wp_get_attachment_image_src($id, $size);
-        $image = $image[0];
+        $image = $image ? $image[0] : '';
         return $image;
     }
 }
@@ -262,12 +263,19 @@ function flatsome_get_image($id, $size = 'large', $alt = 'bg_image', $inline = f
         return '<img src="'.$id.'" alt="'.$alt.'" />';
     } else {
         $meta = get_post_mime_type($id);
-        if($meta == 'image/svg+xml' && $inline){
-          $image = wp_get_attachment_image_src($id);
-          return wp_remote_fopen($image[0]);
-        } else {
-          return wp_get_attachment_image($id, $size);
+
+        if ( $meta == 'image/svg+xml' && $inline ){
+          $file = get_attached_file( $id );
+          if ( $file && file_exists( $file ) ) {
+            return preg_replace(
+              '#<script(.*?)>(.*?)</script>#is',
+              '',
+              file_get_contents( $file )
+            );
+          }
         }
+
+        return wp_get_attachment_image( $id, $size );
     }
 }
 
@@ -430,13 +438,13 @@ function flatsome_get_gradient($primary){ ?>
  * @param array $link_atts Link attributes 'target' and 'rel'.
  * @param bool  $trim      Trim start and end whitespaces?
  *
- * @return null|string Parsed target/rel string or null when no target defined.
+ * @return string Parsed target/rel string.
  */
 function flatsome_parse_target_rel( array $link_atts, $trim = false ) {
-	if ( ! $link_atts['target'] ) {
-		return null;
-	}
+	$attrs = array();
+
 	if ( $link_atts['target'] == '_blank' ) {
+		$attrs[]            = "target=\"{$link_atts['target']}\"";
 		$link_atts['rel'][] = 'noopener';
 		$link_atts['rel'][] = 'noreferrer';
 	}
@@ -444,12 +452,97 @@ function flatsome_parse_target_rel( array $link_atts, $trim = false ) {
 	if ( isset( $link_atts['rel'] ) && is_array( $link_atts['rel'] ) && ! empty( array_filter( $link_atts['rel'] ) ) ) {
 		$relations = array_unique( array_filter( $link_atts['rel'] ) );
 		$rel       = implode( ' ', $relations );
-		$atts      = " target=\"{$link_atts['target']}\" rel=\"{$rel}\" ";
-
-		return $trim ? trim( $atts ) : $atts;
+		$attrs[]   = "rel=\"{$rel}\"";
 	}
 
-	$atts = " target=\"{$link_atts['target']}\" ";
+	$attrs = ' ' . implode( ' ', $attrs ) . ' ';
 
-	return $trim ? trim( $atts ) : $atts;
+	return $trim ? trim( $attrs ) : $attrs;
+}
+
+/**
+ * Returns the collection of ux_products shortcode box item hooks.
+ *
+ * @return array
+ */
+function flatsome_ux_product_box_items() {
+
+	return array(
+		'cat'              => array(
+			'tag'      => 'woocommerce_shop_loop_item_title',
+			'function' => 'flatsome_woocommerce_shop_loop_category',
+		),
+		'title'            => array(
+			'tag'      => 'woocommerce_shop_loop_item_title',
+			'function' => 'woocommerce_template_loop_product_title',
+		),
+		'rating'           => array(
+			'tag'      => 'woocommerce_after_shop_loop_item_title',
+			'function' => 'woocommerce_template_loop_rating',
+		),
+		'price'            => array(
+			'tag'      => 'woocommerce_after_shop_loop_item_title',
+			'function' => 'woocommerce_template_loop_price',
+		),
+		'add_to_cart'      => array(
+			'tag'      => 'flatsome_product_box_after',
+			'function' => 'flatsome_woocommerce_shop_loop_button',
+		),
+		'add_to_cart_icon' => array(
+			'tag'      => 'flatsome_product_box_actions',
+			'function' => 'flatsome_product_box_actions_add_to_cart',
+		),
+		'quick_view'       => array(
+			'tag'      => 'flatsome_product_box_actions',
+			'function' => 'flatsome_lightbox_button',
+		),
+	);
+}
+
+/**
+ * Starts the toggle of box item hooks.
+ *
+ * @param array $items A collection of box items of a specific element.
+ *
+ * @return array $items Box items with additional data.
+ */
+function flatsome_box_item_toggle_start( $items ) {
+
+	foreach ( $items as $key => $data ) {
+		if ( isset( $data['show'] ) && ! $data['show'] ) {
+			$priority = has_action( $data['tag'], $data['function'] );
+			if ( $priority !== false ) {
+				remove_action( $data['tag'], $data['function'], $priority );
+				$items[ $key ]['priority'] = $priority;
+				$items[ $key ]['re_hook']  = true;
+			}
+		}
+	}
+
+	return $items;
+}
+
+/**
+ * Ends the toggle of box item hooks.
+ *
+ * @param array $items A collection of box items of a specific element.
+ */
+function flatsome_box_item_toggle_end( $items ) {
+	foreach ( $items as $item ) {
+		if ( isset( $item['re_hook'] ) && $item['re_hook'] == true ) {
+			add_action( $item['tag'], $item['function'], $item['priority'] );
+		}
+	}
+}
+
+/**
+ * Inserts items at offset in an associative array.
+ *
+ * @param array $array
+ * @param array $values
+ * @param int $offset
+ * @return array
+ */
+function flatsome_array_insert( array $array, array $values, $offset ) {
+  return array_slice( $array, 0, $offset, true ) + $values + array_slice( $array, $offset, null, true );
 }

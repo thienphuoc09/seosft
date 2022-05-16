@@ -37,6 +37,27 @@ function ux_section( $atts, $content = null ) {
 		'margin'           => '',
 		'loading'          => '',
 		'scroll_for_more'  => '',
+		// Shape divider.
+		'divider_top'            => '',
+		'divider_top_height'     => '150px',
+		'divider_top_height__sm' => null,
+		'divider_top_height__md' => null,
+		'divider_top_width'      => '100',
+		'divider_top_width__sm'  => null,
+		'divider_top_width__md'  => null,
+		'divider_top_fill'       => '',
+		'divider_top_flip'       => 'false',
+		'divider_top_to_front'   => 'false',
+		'divider'                => '',
+		'divider_height'         => '150px',
+		'divider_height__sm'     => null,
+		'divider_height__md'     => null,
+		'divider_width'          => '100',
+		'divider_width__sm'      => null,
+		'divider_width__md'      => null,
+		'divider_fill'           => '',
+		'divider_flip'           => 'false',
+		'divider_to_front'       => 'false',
 		// Border Control.
 		'border'           => '',
 		'border_hover'     => '',
@@ -130,7 +151,7 @@ function ux_section( $atts, $content = null ) {
 				echo '<div class="loading-spin centered"></div>';
 			}
 			if ( $scroll_for_more ) {
-				echo '<button class="scroll-for-more z-5 icon absolute bottom h-center">' . get_flatsome_icon( 'icon-angle-down', '42px' ) . '</button>';
+				echo '<button class="scroll-for-more z-5 icon absolute bottom h-center" aria-label="' . esc_attr__( 'Scroll for more', 'flatsome' ) . '">' . get_flatsome_icon( 'icon-angle-down', '42px' ) . '</button>';
 			}
 			if ( $effect ) {
 				echo '<div class="effect-' . $effect . ' bg-effect fill no-click"></div>';
@@ -139,11 +160,13 @@ function ux_section( $atts, $content = null ) {
 
 			<?php require( __DIR__ . '/commons/border.php' ); ?>
 
-		</div><!-- .section-bg -->
+		</div>
+
+		<?php require __DIR__ . '/commons/shape-divider.php'; ?>
 
 		<div class="section-content relative">
 			<?php echo $content; ?>
-		</div><!-- .section-content -->
+		</div>
 
 		<?php
 		// Get custom CSS.
@@ -176,6 +199,32 @@ function ux_section( $atts, $content = null ) {
 			'bg_pos'     => array(
 				'selector' => '.section-bg',
 				'property' => 'background-position',
+			),
+			'divider_top_height' => array(
+				'selector' => '.ux-shape-divider--top svg',
+				'property' => 'height',
+			),
+			'divider_top_width'  => array(
+				'selector' => '.ux-shape-divider--top svg',
+				'property' => '--divider-top-width',
+				'unit'     => '%',
+			),
+			'divider_top_fill'   => array(
+				'selector' => '.ux-shape-divider--top .ux-shape-fill',
+				'property' => 'fill',
+			),
+			'divider_height'     => array(
+				'selector' => '.ux-shape-divider--bottom svg',
+				'property' => 'height',
+			),
+			'divider_width'      => array(
+				'selector' => '.ux-shape-divider--bottom svg',
+				'property' => '--divider-width',
+				'unit'     => '%',
+			),
+			'divider_fill'       => array(
+				'selector' => '.ux-shape-divider--bottom .ux-shape-fill',
+				'property' => 'fill',
 			),
 		);
 		echo ux_builder_element_style_tag( $_id, $args, $atts );

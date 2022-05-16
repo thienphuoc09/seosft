@@ -132,6 +132,7 @@ add_ux_builder_shortcode( 'ux_banner', array(
     ),
     'slide_options' =>  require( __DIR__ . '/commons/slide.php' ),
     'background_options' => require( __DIR__ . '/commons/background.php' ),
+    'shape_divider_options' => require( __DIR__ . '/commons/shape-divider.php' ),
     'border_options' => require( __DIR__ . '/commons/border.php' ),
     'link_options' => require( __DIR__ . '/commons/links.php' ),
     'video_options' => require( __DIR__ . '/commons/video.php' ),

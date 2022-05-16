@@ -18,7 +18,7 @@
       this.bindEvents()
     },
     addEditButton: function () {
-      this.headerToolbar = document.querySelector('.block-editor .edit-post-header-toolbar')
+      this.headerToolbar = document.querySelector('.block-editor .edit-post-header__toolbar')
 
       if (!this.headerToolbar) return
       this.headerToolbar.insertAdjacentHTML('beforeend',
@@ -51,7 +51,7 @@
           return self.redirectToBuilder()
         }
         if (wp.data.select('core/editor').didPostSaveRequestSucceed()) {
-          location.href = self.editUrl
+          window.top.location.href = self.editUrl
           self.editButton.innerHTML += '...'
         } else {
           self.editButton.classList.remove('is-busy')
