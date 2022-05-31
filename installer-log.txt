@@ -211,3 +211,233 @@ No General Notices Found
 STEP-3 COMPLETE @ 09:34:40 - RUNTIME: 0.2988 sec. 
 
 
+ZipArchive Object
+(
+    [status] => 0
+    [statusSys] => 0
+    [numFiles] => 13492
+    [filename] => C:\xampp\htdocs\wordpress\seosft.zip
+    [comment] => 
+)
+File timestamp set to Current: 2022-05-30 02:31:02
+<<< ZipArchive Unzip Complete: true
+
+WEB SERVER CONFIGURATION FILE STATUS:
+- .htaccess file was not reset or backed up.
+- .user.ini file was not reset or backed up.
+- web.config file was not reset or backed up.
+
+STEP-1 COMPLETE @ 02:31:02 - RUNTIME: 35.9202 sec.
+
+
+
+********************************************************************************
+* DUPLICATOR PRO INSTALL-LOG
+* STEP-2 START @ 02:33:27
+* NOTICE: Do NOT post to public sites or forums!!
+********************************************************************************
+
+WARNING: The database script is '1.37MB' in size.  The PHP memory allocation is set
+at '5000M'.  There is a high possibility that the installer script will fail with
+a memory allocation error when trying to load the database.sql file.  It is
+recommended to increase the 'memory_limit' setting in the php.ini config file.
+see: https://snapcreek.com/duplicator/docs/faqs-tech#faq-trouble-056-q 
+
+--------------------------------------
+DATABASE-ENVIRONMENT
+--------------------------------------
+MYSQL VERSION:	This Server: 10.4.24 -- Build Server: 10.4.24
+FILE SIZE:	database.sql (1.37MB) - installer-data.sql (1.37MB)
+TIMEOUT:	5000
+MAXPACK:	1048576
+SQLMODE-GLOBAL:	NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION
+SQLMODE-SESSION:NO_AUTO_VALUE_ON_ZERO
+NEW SQL FILE:	[C:/xampp/htdocs/wordpress/installer-data.sql]
+COLLATE FB:	Off
+DB CHUNKING:	disabled
+DB VIEWS:	enabled
+DB PROCEDURES:	enabled
+--------------------------------------
+DATABASE RESULTS
+--------------------------------------
+Starting Cleanup Routine...
+Cleanup Routine Complete
+ERRORS FOUND:	0
+DROPPED TABLES:	12
+RENAMED TABLES:	0
+QUERIES RAN:	2290
+
+wp_actionscheduler_actions: (119)
+wp_actionscheduler_claims: (0)
+wp_actionscheduler_groups: (6)
+wp_actionscheduler_logs: (357)
+wp_commentmeta: (0)
+wp_comments: (0)
+wp_duplicator_pro_entities: (5)
+wp_duplicator_pro_packages: (0)
+wp_links: (0)
+wp_options: (401)
+wp_postmeta: (653)
+wp_posts: (280)
+wp_social_users: (0)
+wp_term_relationships: (37)
+wp_term_taxonomy: (37)
+wp_termmeta: (37)
+wp_terms: (37)
+wp_usermeta: (53)
+wp_users: (2)
+wp_wc_admin_note_actions: (49)
+wp_wc_admin_notes: (43)
+wp_wc_category_lookup: (8)
+wp_wc_customer_lookup: (0)
+wp_wc_download_log: (0)
+wp_wc_order_coupon_lookup: (0)
+wp_wc_order_product_lookup: (0)
+wp_wc_order_stats: (0)
+wp_wc_order_tax_lookup: (0)
+wp_wc_product_attributes_lookup: (0)
+wp_wc_product_download_directories: (2)
+wp_wc_product_meta_lookup: (11)
+wp_wc_rate_limits: (0)
+wp_wc_reserved_stock: (0)
+wp_wc_tax_rate_classes: (2)
+wp_wc_webhooks: (0)
+wp_woocommerce_api_keys: (0)
+wp_woocommerce_attribute_taxonomies: (1)
+wp_woocommerce_downloadable_product_permissions: (0)
+wp_woocommerce_log: (0)
+wp_woocommerce_order_itemmeta: (0)
+wp_woocommerce_order_items: (0)
+wp_woocommerce_payment_tokenmeta: (0)
+wp_woocommerce_payment_tokens: (0)
+wp_woocommerce_sessions: (1)
+wp_woocommerce_shipping_zone_locations: (1)
+wp_woocommerce_shipping_zone_methods: (2)
+wp_woocommerce_shipping_zones: (1)
+wp_woocommerce_tax_rate_locations: (0)
+wp_woocommerce_tax_rates: (0)
+wp_yith_wcwl: (0)
+wp_yith_wcwl_lists: (0)
+Removed '91' cache/transient rows
+
+INSERT DATA RUNTIME: 3.2213 sec.
+STEP-2 COMPLETE @ 02:33:30 - RUNTIME: 3.3109 sec.
+
+
+
+********************************************************************************
+DUPLICATOR PRO INSTALL-LOG
+STEP-3 START @ 02:34:33
+NOTICE: Do NOT post to public sites or forums
+********************************************************************************
+CHARSET SERVER:	utf8mb4
+CHARSET CLIENT:	utf8
+
+--------------------------------------
+SERIALIZER ENGINE
+[*] scan every column
+[~] scan only text columns
+[^] no searchable columns
+--------------------------------------
+Subsite id=-1
+wp_actionscheduler_actions~ (119)
+wp_actionscheduler_claims^ (0)
+wp_actionscheduler_groups~ (6)
+wp_actionscheduler_logs~ (357)
+wp_commentmeta^ (0)
+wp_comments^ (0)
+wp_duplicator_pro_entities~ (5)
+wp_duplicator_pro_packages^ (0)
+wp_links^ (0)
+wp_options~ (401)
+wp_postmeta~ (653)
+wp_posts~ (280)
+wp_social_users^ (0)
+wp_term_relationships~ (37)
+wp_term_taxonomy~ (37)
+wp_termmeta~ (37)
+wp_terms~ (37)
+wp_usermeta~ (53)
+wp_users~ (2)
+wp_wc_admin_note_actions~ (49)
+wp_wc_admin_notes~ (43)
+wp_wc_category_lookup~ (8)
+wp_wc_customer_lookup^ (0)
+wp_wc_download_log^ (0)
+wp_wc_order_coupon_lookup^ (0)
+wp_wc_order_product_lookup^ (0)
+wp_wc_order_stats^ (0)
+wp_wc_order_tax_lookup^ (0)
+wp_wc_product_attributes_lookup^ (0)
+wp_wc_product_download_directories~ (2)
+wp_wc_product_meta_lookup~ (11)
+wp_wc_rate_limits^ (0)
+wp_wc_reserved_stock^ (0)
+wp_wc_tax_rate_classes~ (2)
+wp_wc_webhooks^ (0)
+wp_woocommerce_api_keys^ (0)
+wp_woocommerce_attribute_taxonomies~ (1)
+wp_woocommerce_downloadable_product_permissions^ (0)
+wp_woocommerce_log^ (0)
+wp_woocommerce_order_itemmeta^ (0)
+wp_woocommerce_order_items^ (0)
+wp_woocommerce_payment_tokenmeta^ (0)
+wp_woocommerce_payment_tokens^ (0)
+wp_woocommerce_sessions~ (1)
+wp_woocommerce_shipping_zone_locations~ (1)
+wp_woocommerce_shipping_zone_methods~ (2)
+wp_woocommerce_shipping_zones~ (1)
+wp_woocommerce_tax_rate_locations^ (0)
+wp_woocommerce_tax_rates^ (0)
+wp_yith_wcwl^ (0)
+wp_yith_wcwl_lists^ (0)
+Partial off
+--------------------------------------
+Search1:	'C:/xampp/htdocs/seosft' 
+Change1:	'C:/xampp/htdocs/wordpress' 
+Search2:	'C:\/xampp\/htdocs\/seosft' 
+Change2:	'C:\/xampp\/htdocs\/wordpress' 
+Search3:	'C%3A%2Fxampp%2Fhtdocs%2Fseosft%2F' 
+Change3:	'C%3A%2Fxampp%2Fhtdocs%2Fwordpress%2F' 
+Search4:	'C:\xampp\htdocs\seosft' 
+Change4:	'C:/xampp/htdocs/wordpress' 
+Search5:	'//localhost/seosft' 
+Change5:	'//localhost/wordpress' 
+Search6:	'\/\/localhost\/seosft' 
+Change6:	'\/\/localhost\/wordpress' 
+Search7:	'%2F%2Flocalhost%2Fseosft' 
+Change7:	'%2F%2Flocalhost%2Fwordpress' 
+SCANNED:	Tables:51 	|	 Rows:2145 	|	 Cells:16257 
+UPDATED:	Tables:2 	|	 Rows:294 	|	 Cells:303 
+ERRORS:		0 
+RUNTIME:	0.435600 sec
+
+NEW WP-ADMIN USER:
+ - Username 'admin123' already exists in the database.  Unable to create new account.
+
+
+====================================
+CONFIGURATION FILE UPDATES:
+====================================
+
+UPDATED WP-CONFIG ARK FILE:
+ - 'C:/xampp/htdocs/wordpress/wp-config-arc.txt'
+
+WEB SERVER CONFIGURATION FILE UPDATED:
+- Preparing .htaccess file with basic setup.
+- Successfully updated the .htaccess file setting.
+
+====================================
+GENERAL UPDATES & CLEANUP:
+====================================
+
+- Removed '0' schedule storage items
+
+====================================
+NOTICES
+====================================
+
+
+STEP-3 COMPLETE @ 02:34:33 - RUNTIME: 0.4619 sec. 
+
+
